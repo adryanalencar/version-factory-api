@@ -42,6 +42,18 @@ class WebhookController{
 
     }
 
+    async projectCreated(request: Request, response: Response): Promise<Response> {
+        const { body } = request;
+        const { project_id } = body;
+
+        const gitLabApi = new GitLabApi();
+        await gitLabApi.createProjectHook(project_id);
+
+        return response.json({
+            message: 'Webhook received'
+        });
+    }
+
 }
 
 export { WebhookController }
