@@ -12,7 +12,7 @@ function GitLabApi(){
     });
     
     this.ObjectToQueryString = (obj) => {
-        return '?' + Object.keys(obj).map(k => {
+        return Object.keys(obj).map(k => {
             return encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])
         }).join('&');
     }
