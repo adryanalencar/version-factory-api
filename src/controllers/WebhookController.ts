@@ -7,7 +7,7 @@ class WebhookController{
     async dispatch(request: Request, response: Response): Promise<Response> {
         const { body } = request;
 
-        const { project, tag, name } = body;
+        const { project, tag } = body;
 
         const gitLabApi = new GitLabApi();
         const release = await gitLabApi.getRelease(project.id, tag);
@@ -26,12 +26,12 @@ class WebhookController{
             var responses = []
 
             for(const link of links){
-                responses.push(await gitLabApi.createLink(project.id, name, link));
+                responses.push(await gitLabApi.createLink(project.id, tag, link));
             }
 
             for(const link of responses){
                 link.link_type = "package";
-                await gitLabApi.updateLink(project.id, name, link);
+                await gitLabApi.updateLink(project.id, tag, link);
             }
         }
 
