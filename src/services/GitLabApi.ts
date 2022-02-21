@@ -49,8 +49,9 @@ function GitLabApi(){
         const url = `${this.baseUrl}/projects/${projectId}/hooks`;
         var data = qs.stringify({
             url: `http://localhost:${process.env.PORT}/webhook`,
-            release_events: 'true',
-            'enable_ssl_verification': 'false' 
+            releases_events: 'true',
+            push_events: 'false',
+            enable_ssl_verification: 'false'             
         });
 
         const response = await axios.post(url, data, { headers: this.headers, httpsAgent: agent });
