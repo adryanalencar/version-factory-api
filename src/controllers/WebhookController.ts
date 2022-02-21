@@ -44,10 +44,13 @@ class WebhookController{
 
     async projectCreated(request: Request, response: Response): Promise<Response> {
         const { body } = request;
-        const { project_id } = body;
+        const { project_id, event_name } = body;
 
         const gitLabApi = new GitLabApi();
-        await gitLabApi.createProjectHook(project_id);
+        
+        if(event_name === "project_create"){
+            await gitLabApi.createProjectHook(project_id);
+        }        
 
         return response.json({
             message: 'Webhook received'
