@@ -1,5 +1,6 @@
 import axios from "axios";
 import https from 'https';
+import qs from 'qs'
 
 function GitLabApi(){
     this.baseUrl = `${process.env.SECURE_URL ? 'https' : 'http'}://${process.env.BASE_URL}/api/v4`;
@@ -46,9 +47,10 @@ function GitLabApi(){
 
     this.createProjectHook = async (projectId) => {
         const url = `${this.baseUrl}/projects/${projectId}/hooks`;
-        var data = this.ObjectToQueryString({
+        var data = qs.stringify({
             url: `http://localhost:${process.env.PORT}/webhook`,
-            release_events: true,
+            release_events: 'true',
+            'enable_ssl_verification': 'false' 
         });
 
         const response = await axios.post(url, data, { headers: this.headers, httpsAgent: agent });
