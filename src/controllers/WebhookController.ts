@@ -7,10 +7,10 @@ class WebhookController{
     async dispatch(request: Request, response: Response): Promise<Response> {
         const { body } = request;
 
-        const { project, name } = body;
+        const { project, tag, name } = body;
 
         const gitLabApi = new GitLabApi();
-        const release = await gitLabApi.getRelease(project.id, name);
+        const release = await gitLabApi.getRelease(project.id, tag);
         const description = release.description.split("Links") 
         
         if(description.length > 1){
